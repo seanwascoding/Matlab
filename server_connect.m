@@ -30,7 +30,7 @@ t.Name='timer';
 
 % setup
 t.Period=5;                                %the time between execute
-t.TimerFcn={@myTimerFcn,server};     %function
+t.TimerFcn={@myTimerFcn,server};           %function
 t.StartDelay=1;                            %the gap between start and first-function
 t.ExecutionMode='fixedSpacing';            %Execution Mode (can search on official-web)
 t.ErrorFcn='disp("An error has occured")';
@@ -50,7 +50,7 @@ function myTimerFcn(t, event, server)
     % input data
     name=[];
     state=[];
-    name_length=read(server, 1, "string")
+    name_length=read(server, 3, "string")
     if ~isempty(name_length)
         name=read(server, str2num(name_length), "string")
         if ~isempty(name)
@@ -74,9 +74,9 @@ function myTimerFcn(t, event, server)
     end
 
     % output data
-    if ~isempty(state)
-        write(server,state);
-        flush(server);
+    if ~isempty(name)
+        write(server,name);
+        %flush(server);
     end
     disp('func end')
 end
