@@ -32,8 +32,11 @@ t.Name='timer';
 t.Period=5;                                %the time between execute
 t.TimerFcn={@myTimerFcn,server};           %function
 t.StartDelay=1;                            %the gap between start and first-function
-t.ExecutionMode='fixedSpacing';            %Execution Mode (can search on official-web)
+t.ExecutionMode='fixedDelay';            %Execution Mode (can search on official-web)
 t.ErrorFcn='disp("An error has occured")';
+
+% https://www.mathworks.com/help/matlab/ref/timer.html
+
 
 % TasksToExecute 為執行次數
 t.TasksToExecute=Inf;
@@ -61,7 +64,8 @@ function myTimerFcn(t, event, server)
     % funtion
     if ~isempty(name)
         if (state == '1')
-            gray(name)
+            % gray(name)
+            test(name)
         elseif (state == '2')
             encryption(name)
         elseif (state == '3')
