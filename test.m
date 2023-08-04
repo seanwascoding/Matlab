@@ -1,4 +1,4 @@
-function output = test(name)
+function output=test(name)
     %選擇要加密圖片
     image= imread('C:\Users\Sean\Desktop\vscode\project\'+name);  %讀取圖片
     
@@ -226,4 +226,7 @@ function output = test(name)
     
     % 將加密後的圖片保存到文件
     imwrite(colorImage, 'C:\Users\Sean\Desktop\vscode\project\'+name);
+
+    output=name;
+
 end

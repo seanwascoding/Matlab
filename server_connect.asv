@@ -20,12 +20,8 @@ read(t,50,'int8')
 
 clc;
 
-% setup parfeval
-f(1)=parfeval(@strat_server, 1, 5);
-fetchOutputs(f);
-delete(f(1));
-f(1)=[];
-numel(f)
+% setup 
+f=parfeval(@error, 1, 5)
 
 % setup server
 server.Timeout=5;
@@ -37,7 +33,6 @@ t.Name='timer';
 
 % setup
 t.Period=5;                                %the time between execute
-t.UserData=f;
 t.TimerFcn={@myTimerFcn,server};           %function
 t.StartDelay=1;                            %the gap between start and first-function
 t.ExecutionMode='fixedSpacing';            %Execution Mode (can search on official-web)
@@ -54,11 +49,9 @@ t.TasksToExecute=Inf;
 start(t);
 
 % function
-function myTimerFcn(t, ~, server)
+function myTimerFcn(~, ~, server)
     clc;
     disp('func start')
-   
-    f=t.UserData;
 
     % input data
     name=[];
@@ -71,13 +64,16 @@ function myTimerFcn(t, ~, server)
         end
     end
 
+    % f=parfeval(@error, 1, 5)
+    
+    % [index, value] = fetchNext(f)
+
     % funtion
     if ~isempty(name)
         if (state == '1')
             % gray(name)
             % test(name)
-            numel(f)
-            f(numel(f)+1)=parfeval(@test, 1, name);
+            f=parfeval(@test_1, numel(f)+1, name);
         elseif (state == '2')
             f=encryption(name)
         elseif (state == '3')
@@ -89,40 +85,24 @@ function myTimerFcn(t, ~, server)
         end
     end
 
-    for j=numel(f):-1:1
-        if(f(j).State == "finished")
-            disp("working")
-            [~, value]=fetchNext(f(j));
-            delete(f(j))
-            f(j)=[];
-            write(server,value);
-        end
-    end
-
-    disp("mission in progress:" + num2str(numel(f)));
-
     % output data
     % if ~isempty(name)
     %     write(server,name);
     %     %flush(server);
     % end
-
-    t.UserData=f;
-
     disp('func end')
 end
 
 
 %%stop(t)
 
-function output=strat_server(t)
-    pause(5)
+function output=error(t)
+    pause(10)
     output=t;
 end
 
-function result=test_1(name)
-    pause(10)
-    result=name;
+function test_1(name)
+    result=test(name);
 end
 
 
