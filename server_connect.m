@@ -1,34 +1,45 @@
-% Server
+%% checked gpu count
+gpuDeviceCount;
+gpuDevice
+gpuDeviceTable;
+
+%% Server
 
 clc;
 
 % Create TCP/IP server
 % server = tcpclient('localhost', 65500);
-% server = tcpserver(65500)
+server = tcpserver(65500);
 
 % Close & open TCP/IP connect
 % echotcpip("off")
 % echotcpip("on",65500)
 
 % reset the timeout value
-server.Timeout=5;
+% server.Timeout=5;
 
 % read data from client
-read(t,50,'int8')
+% read(t,50,'int8')
 
 %% Timer
 
 clc;
 
 % setup parfeval
+% gpuDevice(1)
 f(1)=parfeval(@strat_server, 1, 5);
 fetchOutputs(f);
-delete(f(1));
+% delete(f(1));
 f(1)=[];
 numel(f)
 
 % setup server
 server.Timeout=5;
+get(server, 'OutputBufferSize')
+get(server, 'InputBufferSize')
+bufferSize = 4096; % 設置緩衝區大小為 4096 字節
+set(server, 'OutputBufferSize', bufferSize);
+set(server, 'InputBufferSize', bufferSize);
 configureTerminator(server, "CR/LF");
 
 % Create timer & name
@@ -76,8 +87,12 @@ function myTimerFcn(t, ~, server)
         if (state == '1')
             % gray(name)
             % test(name)
-            numel(f)
+            % numel(f)
             f(numel(f)+1)=parfeval(@test, 1, name);
+            % f(numel(f)+1)=parfeval(@worker, 1, name);
+            % run_test=arrayfun(@test, name);
+            % results = gather(run_test);
+            % write(server,name);
         elseif (state == '2')
             f=encryption(name)
         elseif (state == '3')
@@ -93,7 +108,7 @@ function myTimerFcn(t, ~, server)
         if(f(j).State == "finished")
             disp("working")
             [~, value]=fetchNext(f(j));
-            delete(f(j))
+            % delete(f(j))
             f(j)=[];
             write(server,value);
         end
@@ -120,9 +135,7 @@ function output=strat_server(t)
     output=t;
 end
 
-function result=test_1(name)
-    pause(10)
-    result=name;
-end
-
-
+% function result=worker(name)
+%     run_test=arrayfun(@test, name);
+%     result = gather(run_test);
+% end

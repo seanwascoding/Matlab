@@ -1,7 +1,8 @@
 function output=test(name)
     %選擇要加密圖片
-    image= imread('C:\Users\Sean\Desktop\vscode\project\'+name);  %讀取圖片
-    
+    image= imread(name);  %讀取圖片
+    % image = gpuArray(imread('C:\Users\Sean\Desktop\vscode\project\' + name));
+
     %..........................加密密鑰
     %混沌系統
     aa=36;
@@ -57,7 +58,7 @@ function output=test(name)
     end
     nn=floor((3*M*N)^(1/3));
     cf=[];
-    length(common_factors)
+    length(common_factors);
     
     for i=1:1:length(common_factors)
         if common_factors(i)<=nn
@@ -65,8 +66,8 @@ function output=test(name)
         end
     end
     %disp(cf)
-    n=max(cf)    %求n (n為最大公因數且小於nn)
-    m=(3*M*N)/(n^2)   %求m (m為n*n大小矩陣之數量)
+    n=max(cf);    %求n (n為最大公因數且小於nn)
+    m=(3*M*N)/(n^2);   %求m (m為n*n大小矩陣之數量)
     
     % 將大矩陣切成小矩陣，以n*n大小唯一單位切割
     index = 1;
@@ -225,7 +226,8 @@ function output=test(name)
     
     
     % 將加密後的圖片保存到文件
-    imwrite(colorImage, 'C:\Users\Sean\Desktop\vscode\project\'+name);
+    imwrite(colorImage, name);
+    % imwrite(uint8(colorImage), ['C:\Users\Sean\Desktop\vscode\project\', name]);
 
     output=name;
 

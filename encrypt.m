@@ -1,6 +1,6 @@
 close all;clear all;clc;
 %選擇要加密圖片
-image= imread('1.png');  %讀取圖片
+image= imread('cpuinfo.png');  %讀取圖片
 
 %..........................加密密鑰
 %混沌系統
@@ -215,13 +215,13 @@ end
 %將三色灰度圖合成一個彩色圖顯示出來
 colorImage = cat(3, uint8(cimager), uint8(cimageg), uint8(cimageb));
 %imshow(colorImage)
-imtool(uint8(colorImage))
+% imtool(uint8(colorImage))
 
 
-figure
-subplot(2,2,1);imhist(uint8(cimager))
-subplot(2,2,2);imhist(uint8(cimageg))
-subplot(2,2,3);imhist(uint8(cimageb))
+% figure
+% subplot(2,2,1);imhist(uint8(cimager))
+% subplot(2,2,2);imhist(uint8(cimageg))
+% subplot(2,2,3);imhist(uint8(cimageb))
 
 
 % 將加密後的圖片保存到文件
