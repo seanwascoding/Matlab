@@ -9,7 +9,7 @@ clc;
 
 % Create TCP/IP server
 % server = tcpclient('localhost', 65500);
-server = tcpserver(65500);
+server = tcpserver(65502);
 
 % Close & open TCP/IP connect
 % echotcpip("off")
@@ -94,7 +94,8 @@ function myTimerFcn(t, ~, server)
             % results = gather(run_test);
             % write(server,name);
         elseif (state == '2')
-            f=encryption(name)
+            f(numel(f)+1)=parfeval(@test2, 1, name);
+            % f=encryption(name)
         elseif (state == '3')
             f=decryption(name)
         elseif (state == '4')
