@@ -203,11 +203,13 @@ function output = test2(name)
     end
     
     %圖片顯示
-    % colorImage = cat(3, uint8(cimager), uint8(cimageg), uint8(cimageb));
+    colorImage = cat(3, uint8(cimager), uint8(cimageg), uint8(cimageb));
     % imshow(colorImage)
     % imtool(uint8(colorImage))
     
     % 將解密後的圖片保存到文件
-    imwrite(colorImage, 'decrypted_image.png');
+    imwrite(colorImage, name);
+
+    output=name;
 
 end

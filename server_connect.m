@@ -85,14 +85,7 @@ function myTimerFcn(t, ~, server)
     % funtion
     if ~isempty(name)
         if (state == '1')
-            % gray(name)
-            % test(name)
-            % numel(f)
             f(numel(f)+1)=parfeval(@test, 1, name);
-            % f(numel(f)+1)=parfeval(@worker, 1, name);
-            % run_test=arrayfun(@test, name);
-            % results = gather(run_test);
-            % write(server,name);
         elseif (state == '2')
             f(numel(f)+1)=parfeval(@test2, 1, name);
             % f=encryption(name)
